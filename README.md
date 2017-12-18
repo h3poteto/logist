@@ -1,6 +1,20 @@
 # Logist
 
-This gem provides json format for logger in Rails.
+This gem provides json format for logger in Rails. Logist output json log like this:
+
+```
+$ bundle exec rails s -b 0.0.0.0
+=> Booting Puma
+=> Rails 5.1.4 application starting in development
+=> Run `rails server -h` for more startup options
+Puma starting in single mode...
+* Version 3.10.0 (ruby 2.4.2-p198), codename: Russell's Teapot
+* Min threads: 1, max threads: 5
+* Environment: development
+* Listening on tcp://0.0.0.0:3000
+Use Ctrl-C to stop
+{'level':'INFO','timestamp':'2017-12-18T06:46:13.113120','message':'method=GET path=/ format=html controller=Rails::WelcomeController action=index status=200 duration=10.18 view=8.68 db=0.00','environment':'development'}
+```
 
 ## Installation
 
@@ -20,7 +34,26 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+You have to enable logist configuration in your `config/evnrionments/[rails-env].rb`:
+
+```ruby
+Rails.application.configure do
+  # ...
+  config.logist.enabled = true
+  config.logger = Logist::Logger.new(STDOUT)
+end
+```
+
+You can change logger configuration like this:
+
+```ruby
+Rails.application.configure do
+  # ...
+  config.logist.enabled = true
+  config.logger = Logist::Logger.new(STDOUT)
+  config.logger.formatter.datetime_format = "%Y-%m-%dT%H:%M:%S.%6N"
+```
+
 
 ## Development
 
