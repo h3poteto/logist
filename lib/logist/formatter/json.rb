@@ -10,7 +10,7 @@ module Logist
           temp = {level: severity, timestamp: format_datetime(timestamp), environment: Rails.env}.merge(j)
           ::JSON.dump(temp) + "\n"
         rescue JSON::ParserError
-          "{'level':'#{severity}','timestamp':'#{format_datetime(timestamp)}','message':'#{msg}','environment':'#{Rails.env}'}\n"
+          "{\"level\":\"#{severity}\",\"timestamp\":\"#{format_datetime(timestamp)}\",\"message\":\"#{msg}\",\"environment\":\"#{Rails.env}\"}\n"
         end
       end
     end
