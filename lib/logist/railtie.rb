@@ -1,10 +1,8 @@
 require 'rails/railtie'
-require 'logist/options'
+require 'logist/logger'
 
 module Logist
   class Railtie < Rails::Railtie
-    config.logist = Logist::Options.new
-    config.logist.enabled = false
     config.lograge.formatter = Lograge::Formatters::Json.new
     config.lograge.custom_options = lambda do |event|
       {
@@ -14,8 +12,8 @@ module Logist
     end
 
     config.after_initialize do |app|
-      Logist.setup(app) if app.config.logist.enabled
-      Lograge.setup(app) if app.config.logist.enabled
+      Logist.setup(app) if Logist.enabled?(app)
+      Lograge.setup(app) if Logist.enabled?(app)
     end
   end
 end

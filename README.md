@@ -36,12 +36,11 @@ Or install it yourself as:
 
 ## Usage
 
-You have to enable logist configuration in your `config/evnrionments/[rails-env].rb`:
+You have to use logist logger in your `config/evnrionments/[rails-env].rb`:
 
 ```ruby
 Rails.application.configure do
   # ...
-  config.logist.enabled = true
   config.logger = Logist::Logger.new(STDOUT)
 end
 ```
@@ -51,10 +50,20 @@ You can change logger configuration like this:
 ```ruby
 Rails.application.configure do
   # ...
-  config.logist.enabled = true
+  config.logger = Logist::Logger.new(STDOUT, datetime_format: "%Y-%m-%dT%H:%M:%S%:z:")
+end
+```
+
+or
+
+```ruby
+Rails.application.configure do
+  # ...
   config.logger = Logist::Logger.new(STDOUT)
   config.logger.formatter.datetime_format = "%Y-%m-%dT%H:%M:%S%:z:"
+end
 ```
+
 
 
 ## Development
