@@ -1,15 +1,13 @@
 require 'rails/railtie'
-require 'lograge'
+require 'logist/options'
 
 module Logist
   class Railtie < Rails::Railtie
-    config.lograge.enabled = true
-    config.lograge.formatter = Lograge::Formatters::Json.new
-    config.lograge.custom_options = lambda do |event|
-      {
-        exception: event.payload[:exception], # ["ExceptionClass", "the message"]
-        exception_object: event.payload[:exception_object] # the exception instance
-      }
+    config.logist = Logist::Options.new
+    config.logist.enabled = false
+
+    config.after_initialize do |app|
+      Lograge.setup(app) if app.config.logist.enabled
     end
   end
 end

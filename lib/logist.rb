@@ -1,20 +1,20 @@
 require "logist/version"
 require 'logist/formatter/json'
+require 'logist/logger'
 require 'logger'
+require 'lograge'
 
 module Logist
-  class Logger < ::Logger
-    def initialize(logdev, shift_age = 0, shift_size = 1048576, level: DEBUG,
-                 progname: nil, formatter: nil, datetime_format: nil,
-                 shift_period_suffix: '%Y%m%d')
-      # I think that Logist should support other formats in the future.
-      # But, as it is now, Logist only support json format.
-      # So this line force json format all environments.
-      @formatter = Logist::Formatter::Json.new
-      @formatter.datetime_format = datetime_format
-      super(logdev, shift_age, shift_size, level: level,
-            progname: progname, formatter: @formatter, datetime_format: datetime_format,
-            shift_period_suffix: shift_period_suffix)
+  mattr_accessor :application
+  def setup(app)
+    self.application = application
+    self.app.config.lograge.enabled = true
+    self.app.config.lograge.formatter = Lograge::Formatters::Json.new
+    self.app.config.lograge.custom_options = lambda do |event|
+      {
+        exception: event.payload[:exception], # ["ExceptionClass", "the message"]
+        exception_object: event.payload[:exception_object] # the exception instance
+      }
     end
   end
 end
