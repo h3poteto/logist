@@ -13,8 +13,8 @@ Puma starting in single mode...
 * Environment: development
 * Listening on tcp://0.0.0.0:3000
 Use Ctrl-C to stop
-{"level":"INFO","timestamp":"2017-12-18T08:55:19+00:00:","message":"hoge","environment":"development"}
-{"level":"INFO","timestamp":"2017-12-18T08:55:19+00:00:","environment":"development","method":"GET","path":"/api/health_check","format":"html","controller":"Api::HealthCheckController","action":"index","status":200,"duration":1.89,"view":0.81,"db":0.0,"exception":null,"exception_object":null}
+{"level":"INFO","timestamp":"2017-12-18T08:55:19+00:00","message":"hoge","environment":"development"}
+{"level":"INFO","timestamp":"2017-12-18T08:55:19+00:00","environment":"development","method":"GET","path":"/api/health_check","format":"html","controller":"Api::HealthCheckController","action":"index","status":200,"duration":1.89,"view":0.81,"db":0.0,"exception":null,"exception_object":null}
 ```
 
 ## Installation
@@ -59,7 +59,7 @@ or
 Rails.application.configure do
   # ...
   config.logger = Logist::Logger.new(STDOUT)
-  config.logger.formatter.datetime_format = "%Y-%m-%dT%H:%M:%S%:z:"
+  config.logger.formatter.datetime_format = "%Y-%m-%dT%H:%M:%S%:z"
 end
 ```
 
