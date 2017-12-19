@@ -1,4 +1,5 @@
 # Logist
+[![Build Status](https://travis-ci.org/h3poteto/logist.svg?branch=travis)](https://travis-ci.org/h3poteto/logist)
 
 This gem provides json format for logger in Rails. Logist output json log like this:
 
@@ -81,4 +82,4 @@ The gem is available as open source under the terms of the [MIT License](http://
 
 ## Code of Conduct
 
-Everyone interacting in the Logist project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/logist/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Logist project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/h3poteto/logist/blob/master/CODE_OF_CONDUCT.md).
