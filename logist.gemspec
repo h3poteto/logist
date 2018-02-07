@@ -36,5 +36,6 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "json", ">= 1.8"
   spec.add_runtime_dependency "railties", ">= 4"
+  spec.add_runtime_dependency "activesupport", ">= 4.2"
   spec.add_runtime_dependency "lograge", ">= 0.7", "< 1.0"
 end
