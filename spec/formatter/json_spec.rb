@@ -11,6 +11,13 @@ RSpec.describe Logist::Formatter::Json do
     end
   end
 
+  context "message is a string with double quotes" do
+    let(:deserialized_output) { JSON.parse(formatter.call("debug", now, "", "test :message with \"quotes\"")) }
+    it do
+      expect(deserialized_output).to eq('level' => 'debug', 'environment' => Rails.env, 'timestamp' => now.strftime("%Y-%m-%dT%H:%M:%S.%6N "), 'message' => 'test :message with "quotes"')
+    end
+  end
+
   context "message is a json string" do
     let(:deserialized_output) { JSON.parse(formatter.call("debug", now, "", "{\"hoge\":\"fuga\"}")) }
     it do
