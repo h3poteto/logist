@@ -1,6 +1,7 @@
 # Logist
+[![Build Status](https://travis-ci.com/h3poteto/logist.svg?branch=master)](https://travis-ci.com/h3poteto/logist)
 [![Gem Version](https://badge.fury.io/rb/logist.svg)](https://badge.fury.io/rb/logist)
-[![Build Status](https://travis-ci.org/h3poteto/logist.svg?branch=travis)](https://travis-ci.org/h3poteto/logist)
+[![GitHub release](https://img.shields.io/github/release/h3poteto/logist.svg)](https://github.com/h3poteto/logist/releases)
 
 This gem provides json format for logger in Rails. Logist output json log like this:
 
