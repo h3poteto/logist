@@ -6,13 +6,14 @@ module Logist
   module Formatter
     class Json < ::Logger::Formatter
       def call(severity, timestamp, progname, msg)
+        logobj = {level: severity, timestamp: format_datetime(timestamp), environment: ::Rails.env}
         begin
-          j = ::JSON.parse(msg)
-          temp = {level: severity, timestamp: format_datetime(timestamp), environment: ::Rails.env}.merge(j)
-          ::JSON.dump(temp) + "\n"
+          msg = ::JSON.parse(msg)
+          logobj.merge!(msg)
         rescue JSON::ParserError
-          "{\"level\":\"#{severity}\",\"timestamp\":\"#{format_datetime(timestamp)}\",\"message\":\"#{msg}\",\"environment\":\"#{::Rails.env}\"}\n"
+          logobj[:message] = msg
         end
+        ::JSON.dump(logobj) + "\n"
       end
     end
   end
