@@ -21,7 +21,21 @@ RSpec.describe Logist::Formatter::Json do
   context "message is a json string" do
     let(:deserialized_output) { JSON.parse(formatter.call("debug", now, "", "{\"hoge\":\"fuga\"}")) }
     it do
-      expect(deserialized_output).to eq('level' => 'debug', 'environment' => Rails.env, 'timestamp' => now.strftime("%Y-%m-%dT%H:%M:%S.%6N "), 'hoge' => 'fuga')
+      expect(deserialized_output).to eq('level' => 'debug', 'environment' => Rails.env, 'timestamp' => now.strftime("%Y-%m-%dT%H:%M:%S.%6N "), 'message' => {'hoge' => 'fuga'})
+    end
+  end
+
+  context "message is a hash" do
+    let(:deserialized_output) { JSON.parse(formatter.call("debug", now, "", {k: "1", b: 2})) }
+    it do
+      expect(deserialized_output).to eq('level' => 'debug', 'environment' => Rails.env, 'timestamp' => now.strftime("%Y-%m-%dT%H:%M:%S.%6N "), 'message' => { 'k' => '1', "b" => 2 })
+    end
+  end
+
+  context "message is a array" do
+    let(:deserialized_output) { JSON.parse(formatter.call("debug", now, "", [{hoge: "fuga"}])) }
+    it do
+      expect(deserialized_output).to eq('level' => 'debug', 'environment' => Rails.env, 'timestamp' => now.strftime("%Y-%m-%dT%H:%M:%S.%6N "), "message"=>[{"hoge"=>"fuga"}])
     end
   end
 end
