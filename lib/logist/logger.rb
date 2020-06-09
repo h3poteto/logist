@@ -5,7 +5,13 @@ require 'logger'
 module Logist
   class Logger < ::Logger
     include ActiveSupport::LoggerThreadSafeLevel
-    include LoggerSilence
+
+    # https://github.com/rails/rails/pull/34045
+    if defined?(ActiveSupport::LoggerSilence)
+      include ActiveSupport::LoggerSilence
+    else
+      include LoggerSilence
+    end
 
     def initialize(logdev, shift_age = 0, shift_size = 1048576, level: DEBUG,
                    progname: nil, formatter: nil, datetime_format: nil,
