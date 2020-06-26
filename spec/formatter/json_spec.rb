@@ -38,4 +38,11 @@ RSpec.describe Logist::Formatter::Json do
       expect(deserialized_output).to eq('level' => 'debug', 'environment' => Rails.env, 'timestamp' => now.strftime("%Y-%m-%dT%H:%M:%S.%6N "), "message"=>[{"hoge"=>"fuga"}])
     end
   end
+
+  context "message is a StandardError" do
+    let(:deserialized_output) { JSON.parse(formatter.call("debug", now, "", StandardError.new("hoge"))) }
+    it do
+      expect(deserialized_output).to eq('level' => 'debug', 'environment' => Rails.env, 'timestamp' => now.strftime("%Y-%m-%dT%H:%M:%S.%6N "), "message"=> "hoge")
+    end
+  end
 end

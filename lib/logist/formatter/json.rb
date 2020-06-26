@@ -10,17 +10,14 @@ module Logist
       end
 
       def format_message(msg)
-        case msg.class.name
-          when "Hash"
-            msg
-          when "Array"
-            msg
-          else
-            begin
-              JSON.parse(msg)
-            rescue JSON::ParserError
-              "#{msg}"
-            end
+        if msg.is_a?(Hash) || msg.is_a?(Array) || msg.is_a?(StandardError)
+          msg
+        else
+          begin
+            JSON.parse(msg)
+          rescue JSON::ParserError
+            "#{msg}"
+          end
         end
       end
     end
