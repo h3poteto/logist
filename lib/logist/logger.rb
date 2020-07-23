@@ -24,7 +24,14 @@ module Logist
       super(logdev, shift_age, shift_size, level: level,
             progname: progname, formatter: @formatter, datetime_format: datetime_format,
             shift_period_suffix: shift_period_suffix)
-      after_initialize if respond_to? :after_initialize
+      
+      # https://github.com/rails/rails/pull/34055
+      # even with ^ respond_to?(:after_initialize) is still true
+      # but we know not to run it if ActiveSupport::LoggerSilence is defined, since that was added in the same rails version
+      # via https://github.com/rails/rails/pull/34045
+      if !defined?(ActiveSupport::LoggerSilence) && respond_to?(:after_initialize)
+        after_initialize
+      end
     end
   end
 end
