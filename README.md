@@ -66,6 +66,25 @@ Rails.application.configure do
 end
 ```
 
+### flat_json option
+
+If you want to log Hash object, but you don't want to have nested JSON, you can set `flat_json=true`:
+
+```ruby
+config.logger.formatter.flat_json = true
+```
+
+When `flat_json=false` (default):
+
+```json
+{"level":"INFO","message":{"foo":"bar"}}
+```
+
+When `flat_json=true`:
+
+```json
+{"level":"INFO","foo":"bar"}
+```
 
 
 ## Development
