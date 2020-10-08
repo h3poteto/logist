@@ -38,4 +38,29 @@ RSpec.describe Logist::Formatter::Json do
       expect(deserialized_output).to eq('level' => 'debug', 'environment' => Rails.env, 'timestamp' => now.strftime("%Y-%m-%dT%H:%M:%S.%6N "), "message"=>[{"hoge"=>"fuga"}])
     end
   end
+
+  context "when flat_json=true" do
+    before do
+      formatter.flat_json = true
+    end
+
+    let(:deserialized_output) { JSON.parse(formatter.call("debug", now, "", message)) }
+
+    context "when message is a hash" do
+      let(:message) { { foo: "bar", xyz: "abc" } }
+
+      it 'merges the message with the main hash' do
+        expect(deserialized_output).to eq('level' => 'debug', 'environment' => Rails.env, 'timestamp' => now.strftime("%Y-%m-%dT%H:%M:%S.%6N "), 'foo' => 'bar', 'xyz' => 'abc')
+      end
+    end
+
+    context "when message is something else" do
+      let(:message) { 'Something else' }
+
+
+      it "adds 'message' key to the main hash" do
+        expect(deserialized_output).to eq('level' => 'debug', 'environment' => Rails.env, 'timestamp' => now.strftime("%Y-%m-%dT%H:%M:%S.%6N "), 'message' => 'Something else')
+      end
+    end
+  end
 end
