@@ -66,6 +66,8 @@ Rails.application.configure do
 end
 ```
 
+If you are using [lograge](https://github.com/roidrage/lograge) it will automatically be configured to produce JSON output.
+
 ### flat_json option
 
 If you want to log Hash object, but you don't want to have nested JSON, you can set `flat_json=true`:
